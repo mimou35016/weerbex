@@ -1,159 +1,207 @@
-# Turborepo starter
+# Weerbex – Monorepo Starter
 
-This Turborepo starter is maintained by the Turborepo core team.
+**Weerbex** is a scalable, TypeScript-based monorepo starter built with **Turborepo** and **pnpm workspaces**. It provides an organized foundation for developing and maintaining multiple applications and shared packages within a single repository.
 
-## Using this example
+The project is structured to support modular development, reusable components, centralized authentication, database management, and shared TypeScript definitions.
 
-Run the following command:
+This repository serves as the initial project template for building and extending the Weerbex ecosystem.
 
-```sh
-npx create-turbo@latest
+---
+
+## Project Structure
+
+The repository follows a monorepo architecture, separating applications from shared packages.
+
+```text
+weerbex/
+│
+├── apps/
+│   ├── admin/          # Administrative application
+│   ├── dashboard/      # Dashboard application
+│   └── web/            # Main web application
+│
+├── packages/
+│   ├── auth/           # Shared authentication logic
+│   ├── db/             # Database configuration and utilities
+│   ├── types/          # Shared TypeScript types and interfaces
+│   └── ui/             # Reusable UI components
+│
+├── .turbo/             # Turborepo local cache and metadata
+├── node_modules/       # Installed dependencies
+│
+├── .gitignore
+├── .npmrc
+├── AGENTS.md           # Project-specific development instructions
+├── package.json        # Root package configuration
+├── pnpm-lock.yaml      # Dependency lockfile
+├── pnpm-workspace.yaml # pnpm workspace configuration
+├── tsconfig.base.json  # Shared TypeScript configuration
+├── turbo.json          # Turborepo task configuration
+└── README.md
 ```
 
-## What's inside?
+## Applications
 
-This Turborepo includes the following packages/apps:
+The `apps/` directory contains the main applications of the project.
 
-### Apps and Packages
+| Application | Description                                                                |
+| ----------- | -------------------------------------------------------------------------- |
+| `admin`     | Administrative application for managing platform operations and resources. |
+| `dashboard` | Dashboard application for presenting and managing platform data.           |
+| `web`       | Main web application and primary user-facing interface.                    |
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `@next/eslint-plugin-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+Each application is maintained independently while sharing common packages and configurations from the monorepo.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+## Shared Packages
 
-### Utilities
+The `packages/` directory contains reusable modules shared across applications.
 
-This Turborepo has some additional tools already setup for you:
+| Package | Description                                                                   |
+| ------- | ----------------------------------------------------------------------------- |
+| `auth`  | Centralized authentication logic and shared authentication utilities.         |
+| `db`    | Database configuration, connection management, and shared database utilities. |
+| `types` | Common TypeScript types, interfaces, and definitions.                         |
+| `ui`    | Reusable UI components and shared interface elements.                         |
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+This architecture helps reduce code duplication, maintain consistency, and simplify application development.
 
-### Build
+---
 
-To build all apps and packages, run the following command:
+## Technology and Tooling
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+The project uses the following tools and technologies:
 
-```sh
-cd my-turborepo
-turbo build
+- **[Turborepo](https://turborepo.dev/)** – Monorepo build system and task orchestration.
+- **[pnpm](https://pnpm.io/)** – Fast, efficient package manager and workspace management.
+- **[TypeScript](https://www.typescriptlang.org/)** – Static typing and improved code maintainability.
+- **[Node.js](https://nodejs.org/)** – JavaScript runtime environment.
+- **[Git](https://git-scm.com/)** – Version control and source code management.
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+Before starting development, make sure you have installed:
+
+- Node.js (compatible with the project configuration).
+- pnpm.
+- Git.
+
+Enable Corepack if you use it to manage pnpm versions:
+
+```bash
+corepack enable
 ```
 
-Without global `turbo`, use your package manager:
+### Installation
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm exec turbo build
-pnpm exec turbo build
+Clone the repository:
+
+```bash
+git clone <repository-url>
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+Navigate to the project directory:
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo build --filter=docs
+```bash
+cd weerbex
 ```
 
-Without global `turbo`:
+Install all dependencies:
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```bash
+pnpm install
 ```
 
-### Develop
+### Environment Configuration
 
-To develop all apps and packages, run the following command:
+Configure the environment variables required by each application and shared package.
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+Keep sensitive credentials and API keys in environment files and never commit secrets to the repository.
 
-```sh
-cd my-turborepo
-turbo dev
-```
+---
 
-Without global `turbo`, use your package manager:
+## Development
 
-```sh
-cd my-turborepo
-npx turbo dev
+Turborepo allows you to run development tasks across the monorepo.
+
+Start the development environment:
+
+```bash
 pnpm exec turbo dev
-pnpm exec turbo dev
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+To start a specific application, use its workspace package name:
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
+```bash
+pnpm --filter <package-name> dev
 ```
 
-Without global `turbo`:
+For example, if the application's workspace package name is `web`:
 
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+```bash
+pnpm --filter web dev
 ```
 
-### Remote Caching
+---
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## Building
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+Build all applications and packages:
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
+```bash
+pnpm exec turbo build
 ```
 
-Without global `turbo`, use your package manager:
+Build a specific application or package:
 
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
+```bash
+pnpm exec turbo build --filter=<package-name>
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Turborepo automatically manages task execution and caching according to the configuration defined in `turbo.json`.
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+---
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+## Project Configuration
 
-```sh
-turbo link
-```
+Several files manage the monorepo configuration:
 
-Without global `turbo`:
+| File                  | Purpose                                                            |
+| --------------------- | ------------------------------------------------------------------ |
+| `package.json`        | Root scripts, dependencies, and project metadata.                  |
+| `pnpm-workspace.yaml` | Defines the workspace directories.                                 |
+| `pnpm-lock.yaml`      | Locks dependency versions for consistent installations.            |
+| `turbo.json`          | Defines and configures Turborepo tasks and caching.                |
+| `tsconfig.base.json`  | Provides shared TypeScript compiler settings.                      |
+| `.npmrc`              | Defines pnpm and npm configuration options.                        |
+| `AGENTS.md`           | Contains project-specific instructions and development guidelines. |
 
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
+---
 
-## Useful Links
+## Development Philosophy
 
-Learn more about the power of Turborepo:
+Weerbex follows a modular and maintainable development approach:
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+- **Modularity:** Applications and shared packages are separated by responsibility.
+- **Reusability:** Common functionality is maintained in shared packages.
+- **Scalability:** New applications and packages can be added without restructuring the entire repository.
+- **Consistency:** Shared configurations help maintain consistent development practices.
+- **Maintainability:** Centralized dependencies and workspace management simplify project maintenance.
+
+---
+
+## Useful Resources
+
+- [Turborepo Documentation](https://turborepo.dev/docs)
+- [pnpm Documentation](https://pnpm.io/motivation)
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/)
+- [Node.js Documentation](https://nodejs.org/docs/)
+
+---
+
+**Weerbex – Initial Project Template**
+
+A modular foundation designed for scalable application development.
